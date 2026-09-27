@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Ереван. Арт-погружение</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --bg:#F7EDE6; --surface:#FFFFFF; --ink:#23181C; --muted:#72625F; --line:#E6D3C9;
+  --accent:#D9651E; --pom:#A8263E; --chip:#F2E1D7; --map:#EFDDD2;
+  --c-art:#A8263E; --c-fashion:#C0579A; --c-music:#3F6FB5; --c-tech:#2E8B6A;
+  --display:"Unbounded","Arial Black",system-ui,sans-serif;
+  --body:"Onest","Segoe UI",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#17120F; --surface:#221A16; --ink:#F4E8E0; --muted:#B8A69C; --line:#3B2F29;
+    --accent:#F29A55; --pom:#F0617A; --chip:#2E241F; --map:#2A201B;
+    --c-art:#F0617A; --c-fashion:#E68AC7; --c-music:#7FA6E8; --c-tech:#5CC79E; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#17120F; --surface:#221A16; --ink:#F4E8E0; --muted:#B8A69C; --line:#3B2F29;
+  --accent:#F29A55; --pom:#F0617A; --chip:#2E241F; --map:#2A201B;
+  --c-art:#F0617A; --c-fashion:#E68AC7; --c-music:#7FA6E8; --c-tech:#5CC79E; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--body);padding-inline:20px;padding-block:0 56px}
+.wrap{max-width:1100px;margin:0 auto}
+h1,h2,h3{font-family:var(--display);margin:0;line-height:1.1;text-wrap:balance}
+p{margin:0}
+a{color:inherit}
+button{font:inherit;color:inherit}
+a:focus-visible,button:focus-visible,label:focus-within{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+.eyebrow{font:600 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-block:18px;border-bottom:1px solid var(--line);font:13px var(--mono);color:var(--muted)}
+.bar a{text-decoration:none}.bar a:hover{color:var(--accent)}
+.concept{background:var(--chip);padding:5px 10px;border-radius:999px}
+
+.hero{padding-block:44px 28px;display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:end}
+.hero h1{font-size:clamp(38px,7vw,80px);font-weight:800;letter-spacing:-.02em}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{color:var(--muted);margin-top:16px;max-width:54ch;font-size:17px}
+.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.meta div{padding:16px;border-right:1px solid var(--line)}
+.meta div:last-child{border-right:0}
+.meta b{display:block;font:800 26px var(--display);font-variant-numeric:tabular-nums}
+.meta span{font-size:13px;color:var(--muted)}
+
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-block:8px 18px}
+.filters button{padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:transparent;cursor:pointer;font-size:14px;display:inline-flex;gap:8px;align-items:center}
+.filters button i{width:9px;height:9px;border-radius:50%;background:var(--dot,var(--ink))}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+.main{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+.mapbox{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);background:var(--map);border-radius:18px;padding:14px;border:1px solid var(--line)}
+.mapbox svg{display:block;width:100%;height:auto}
+.mapnote{display:flex;justify-content:space-between;gap:10px;font:12px var(--mono);color:var(--muted);padding:8px 4px 0;flex-wrap:wrap}
+.progress{height:6px;background:var(--line);border-radius:99px;overflow:hidden;margin-top:10px}
+.progress i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
+
+.stops{display:grid;gap:10px}
+.stop{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 16px 16px 18px;display:grid;grid-template-columns:34px 1fr auto;gap:14px;align-items:start;cursor:pointer;transition:border-color .15s}
+.stop:hover,.stop.on{border-color:var(--c)}
+.stop .n{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font:600 13px var(--mono);background:var(--c);color:#fff}
+.stop h3{font:600 17px/1.25 var(--body)}
+.stop .where{font:12px var(--mono);color:var(--muted);margin-top:3px}
+.stop p{color:var(--muted);font-size:14.5px;margin-top:8px}
+.stop .task{margin-top:10px;font-size:14px;padding:8px 10px;border-radius:8px;background:var(--chip)}
+.stop .task b{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--c);margin-right:6px}
+.stop label{display:flex;flex-direction:column;align-items:center;gap:4px;font:11px var(--mono);color:var(--muted);cursor:pointer}
+.stop input{width:20px;height:20px;accent-color:var(--accent);cursor:pointer}
+.stop.done h3{text-decoration:line-through;text-decoration-color:var(--accent)}
+
+section{padding-top:56px}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:22px}
+.sec-head h2{font-size:clamp(24px,3.6vw,38px);font-weight:800;margin-top:10px}
+.sec-head p{color:var(--muted);max-width:46ch}
+
+.botgrid{display:grid;grid-template-columns:380px 1fr;gap:24px;align-items:start}
+.phone{background:var(--surface);border:1px solid var(--line);border-radius:26px;overflow:hidden;max-width:100%}
+.phone header{display:flex;gap:10px;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line)}
+.ava{width:36px;height:36px;border-radius:50%;background:var(--accent);display:grid;place-items:center;color:#fff;font:800 14px var(--display)}
+.phone header b{display:block;font-size:15px}
+.phone header span{font-size:12px;color:var(--muted)}
+.chat{height:380px;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px;background:var(--bg)}
+.msg{max-width:84%;padding:9px 12px;border-radius:14px;font-size:14.5px;white-space:pre-line}
+.msg.bot{background:var(--surface);border:1px solid var(--line);border-bottom-left-radius:4px;align-self:flex-start}
+.msg.me{background:var(--accent);color:#fff;border-bottom-right-radius:4px;align-self:flex-end}
+.kb{display:flex;flex-wrap:wrap;gap:6px;padding:10px;border-top:1px solid var(--line)}
+.kb button{flex:1 1 40%;padding:9px 10px;border-radius:10px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font-size:14px}
+.kb button:hover{border-color:var(--accent);color:var(--accent)}
+.feat{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.feat div{border-top:2px solid var(--ink);padding-top:12px}
+.feat h3{font:600 16px var(--body);margin-bottom:6px}
+.feat p{color:var(--muted);font-size:15px}
+
+.foot{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font:12px var(--mono);color:var(--muted)}
+
+@media (max-width:880px){
+  .hero,.main,.botgrid{grid-template-columns:1fr}
+  .mapbox{position:static}
+}
+@media (max-width:480px){
+  body{padding-inline:16px}
+  .feat{grid-template-columns:1fr}
+  .stop{grid-template-columns:30px 1fr;}
+  .stop label{grid-column:2;flex-direction:row;justify-content:flex-start}
+  .meta b{font-size:20px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar">
+    <a href="index.html">← Портфолио Николая Лощинина</a>
+    <span class="concept">Демо-концепт для Международной школы Студтуризма</span>
+  </div>
+
+  <header class="hero">
+    <div>
+      <div class="eyebrow">Пеший арт-маршрут · 1 день</div>
+      <h1 style="margin-top:14px">Ереван.<br><em>Арт-погружение</em></h1>
+      <p>Девять точек креативного Еревана: от Каскада до мастерской Сарьяна. Выберите тему, отмечайте пройденные места и проходите маршрут вместе с ботом-гидом.</p>
+    </div>
+    <div class="meta" aria-label="Параметры маршрута">
+      <div><b>9</b><span>точек</span></div>
+      <div><b>~7 ч</b><span>с остановками</span></div>
+      <div><b>4</b><span>темы</span></div>
+    </div>
+  </header>
+
+  <div class="filters" role="group" aria-label="Темы маршрута" id="filters"></div>
+
+  <div class="main">
+    <div class="mapbox">
+      <svg id="map" viewBox="0 0 400 420" role="img" aria-label="Схема маршрута по центру Еревана"></svg>
+      <div class="mapnote"><span>Схема, не в масштабе</span><span id="count">Пройдено 0 из 9</span></div>
+      <div class="progress"><i id="bar"></i></div>
+    </div>
+    <div class="stops" id="stops"></div>
+  </div>
+
+  <section>
+    <div class="sec-head">
+      <div><div class="eyebrow">ВК-бот · симуляция</div><h2>Гид, который ведёт по шагам</h2></div>
+      <p>Так бот будет работать в сообщениях сообщества ВКонтакте. Нажимайте кнопки: это живой прототип сценария.</p>
+    </div>
+    <div class="botgrid">
+      <div class="phone">
+        <header><div class="ava">АР</div><div><b>Арт-маршрут Ереван</b><span>бот сообщества</span></div></header>
+        <div class="chat" id="chat" aria-live="polite"></div>
+        <div class="kb" id="kb"></div>
+      </div>
+      <div class="feat">
+        <div><h3>Точка за точкой</h3><p>Бот присылает место, короткую историю и как дойти. Следующая точка открывается, когда турист отметил текущую.</p></div>
+        <div><h3>Задания</h3><p>На каждой точке есть творческое задание: фото, наблюдение, вопрос. Ответы собираются в общий фотоальбом группы.</p></div>
+        <div><h3>Сбор отзывов</h3><p>В конце бот задаёт три вопроса и складывает ответы в таблицу для организаторов. Такой опрос я уже делал в Telegram.</p></div>
+        <div><h3>Стек на Школе</h3><p>VK Bot API (Long Poll), Python, SQLite, сайт на чистом HTML/JS. Бот и сайт работают с одной базой точек.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot"><span>Прототип: Николай Лощинин, 2026</span><span>Данные о местах для демонстрации, на Школе уточняются с экспертами</span></div>
+</div>
+
+<script>
+const THEMES={art:{name:'Искусство',v:'--c-art'},fashion:{name:'Мода и дизайн',v:'--c-fashion'},music:{name:'Музыка',v:'--c-music'},tech:{name:'Технологии',v:'--c-tech'}};
+const STOPS=[
+  {t:'tech',name:'TUMO — центр креативных технологий',where:'Улица Алабяна',x:70,y:360,d:'Бесплатная школа для подростков: анимация, кино, музыка, программирование, дизайн. Одна из самых известных креативных площадок Армении.',task:'Найдите работу студентов TUMO и сфотографируйте её с необычного ракурса.'},
+  {t:'music',name:'Дом-музей Арама Хачатуряна',where:'Центр',x:120,y:250,d:'Музей автора «Танца с саблями». В доме сохранён рабочий кабинет и рояль композитора, проходят камерные концерты.',task:'Запишите 10 секунд звуков улицы у музея для общего саундтрека маршрута.'},
+  {t:'art',name:'Каскад и центр искусств Гафесчяна',where:'Верх ул. Таманяна',x:200,y:60,d:'Гигантская лестница с террасами, скульптурами Ботеро и видом на Арарат. Внутри галереи современного искусства.',task:'Поднимитесь наверх и снимите панораму с Араратом на фоне.'},
+  {t:'fashion',name:'Северный проспект',where:'Между Оперой и Абовяна',x:215,y:170,d:'Пешеходная улица с бутиками, кафе и уличными музыкантами. Витрина современного городского стиля.',task:'Найдите образ дня: сфотографируйте самый яркий уличный стиль (с разрешения).'},
+  {t:'art',name:'Музей современного искусства',where:'Проспект Маштоца',x:140,y:150,d:'Один из первых музеев современного искусства в СССР. Коллекция армянского авангарда второй половины XX века.',task:'Выберите работу и опишите её тремя словами в боте.'},
+  {t:'art',name:'Национальная галерея Армении',where:'Площадь Республики',x:250,y:260,d:'Крупнейшее собрание армянского, русского и европейского искусства в стране, от средневековья до XX века.',task:'Найдите картину с Араратом и сравните её с видом с Каскада.'},
+  {t:'fashion',name:'Вернисаж',where:'Рядом с площадью Республики',x:310,y:300,d:'Рынок ремёсел под открытым небом: ковры, керамика, украшения, живопись, винтаж. Лучше всего в выходные.',task:'Узнайте у мастера, как делается одна вещь, и запишите короткую историю.'},
+  {t:'art',name:'Дом-музей Мартироса Сарьяна',where:'Улица Сарьяна',x:180,y:320,d:'Мастерская главного армянского живописца XX века. Яркие пейзажи и портреты, которые задали цветовой код Армении.',task:'Составьте палитру из пяти цветов Сарьяна и найдите их на улицах города.'},
+  {t:'art',name:'Музей Сергея Параджанова',where:'Над ущельем Раздан',x:70,y:100,d:'Коллажи, ассамбляжи и костюмы режиссёра «Цвета граната». Самый неожиданный музей города.',task:'Соберите из найденных за день предметов свой маленький коллаж.'}
+];
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+let done=new Set(), theme='all', active=null;
+try{done=new Set(JSON.parse(localStorage.getItem('yer-done')||'[]'))}catch(e){}
+const save=()=>{try{localStorage.setItem('yer-done',JSON.stringify([...done]))}catch(e){}};
+
+// фильтры
+const fbox=document.getElementById('filters');
+[['all','Все точки',null],...Object.entries(THEMES).map(([k,v])=>[k,v.name,v.v])].forEach(([k,n,v])=>{
+  const b=document.createElement('button');b.type='button';b.dataset.k=k;b.setAttribute('aria-pressed',k==='all');
+  b.innerHTML=(v?`<i style="--dot:var(${v})"></i>`:'')+n;
+  b.onclick=()=>{theme=k;fbox.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));render()};
+  fbox.appendChild(b);
+});
+
+// список точек
+const list=document.getElementById('stops');
+STOPS.forEach((s,i)=>{
+  const el=document.createElement('article');el.className='stop';el.id='s'+i;
+  el.style.setProperty('--c',`var(${THEMES[s.t].v})`);
+  el.innerHTML=`<div class="n">${i+1}</div><div><h3>${s.name}</h3><div class="where">${THEMES[s.t].name} · ${s.where}</div><p>${s.d}</p><div class="task"><b>Задание</b>${s.task}</div></div><label>был<input type="checkbox" id="c${i}" aria-label="Отметить: ${s.name}"></label>`;
+  el.onclick=e=>{if(e.target.closest('label'))return;active=i;render()};
+  const cb=el.querySelector('input');cb.checked=done.has(i);
+  cb.onchange=()=>{cb.checked?done.add(i):done.delete(i);save();render()};
+  list.appendChild(el);
+});
+
+// карта
+const svg=document.getElementById('map'),NS='http://www.w3.org/2000/svg';
+function render(){
+  const ink=css('--ink'),line=css('--line'),muted=css('--muted'),surf=css('--surface');
+  svg.innerHTML='';
+  const mk=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);svg.appendChild(e);return e};
+  // река Раздан и главные улицы — схематично
+  mk('path',{d:'M20 20 C60 120 20 220 40 300 S30 400 60 415',fill:'none',stroke:css('--c-music'),'stroke-width':10,'stroke-opacity':.18,'stroke-linecap':'round'});
+  mk('text',{x:26,y:230,fill:muted,'font-size':10,'font-family':'JetBrains Mono,monospace',transform:'rotate(-80 26 230)'}).textContent='р. Раздан';
+  mk('circle',{cx:215,cy:215,r:120,fill:'none',stroke:line,'stroke-width':14,'stroke-opacity':.9});
+  mk('text',{x:300,y:118,fill:muted,'font-size':10,'font-family':'JetBrains Mono,monospace'}).textContent='Кольцевой бульвар';
+  const pts=STOPS.map(s=>s.x+','+s.y).join(' ');
+  mk('polyline',{points:pts,fill:'none',stroke:ink,'stroke-width':2,'stroke-dasharray':'5 6','stroke-opacity':.55});
+  let n=0;
+  STOPS.forEach((s,i)=>{
+    const vis=theme==='all'||s.t===theme; if(vis)n++;
+    const col=css(THEMES[s.t].v);
+    const g=document.createElementNS(NS,'g');g.style.cursor='pointer';g.setAttribute('tabindex','0');g.setAttribute('role','button');g.setAttribute('aria-label',s.name);
+    g.onclick=g.onkeydown=e=>{if(e.type==='keydown'&&e.key!=='Enter')return;active=i;render();document.getElementById('s'+i).scrollIntoView({behavior:'smooth',block:'nearest'})};
+    const c=document.createElementNS(NS,'circle');
+    c.setAttribute('cx',s.x);c.setAttribute('cy',s.y);c.setAttribute('r',active===i?17:13);
+    c.setAttribute('fill',done.has(i)?surf:col);c.setAttribute('stroke',col);c.setAttribute('stroke-width',3);
+    c.setAttribute('opacity',vis?1:.2);
+    const t=document.createElementNS(NS,'text');t.setAttribute('x',s.x);t.setAttribute('y',s.y+4);t.setAttribute('text-anchor','middle');
+    t.setAttribute('font-size',12);t.setAttribute('font-family','JetBrains Mono,monospace');t.setAttribute('font-weight',600);
+    t.setAttribute('fill',done.has(i)?col:'#fff');t.setAttribute('opacity',vis?1:.3);t.textContent=done.has(i)?'✓':i+1;
+    g.append(c,t);svg.appendChild(g);
+  });
+  mk('text',{x:392,y:410,'text-anchor':'end',fill:muted,'font-size':10,'font-family':'JetBrains Mono,monospace'}).textContent='↑ север';
+  STOPS.forEach((s,i)=>{const el=document.getElementById('s'+i);el.hidden=!(theme==='all'||s.t===theme);el.classList.toggle('done',done.has(i));el.classList.toggle('on',active===i)});
+  document.getElementById('count').textContent=`Пройдено ${done.size} из ${STOPS.length}`;
+  document.getElementById('bar').style.width=(done.size/STOPS.length*100)+'%';
+}
+render();
+matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change',render);
+new MutationObserver(render).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+
+// симуляция ВК-бота
+const chat=document.getElementById('chat'),kb=document.getElementById('kb');
+let step=-1;
+function say(text,who='bot'){const m=document.createElement('div');m.className='msg '+who;m.textContent=text;chat.appendChild(m);chat.scrollTop=chat.scrollHeight}
+function keys(arr){kb.innerHTML='';arr.forEach(([label,fn])=>{const b=document.createElement('button');b.type='button';b.textContent=label;b.onclick=()=>{say(label,'me');setTimeout(fn,350)};kb.appendChild(b)})}
+function menu(){keys([['Начать маршрут',next],['Выбрать тему',pickTheme],['Как это работает',()=>{say('Я веду по 9 точкам креативного Еревана. На каждой точке — короткая история и задание. Отметьте «Я на месте», и я пришлю следующую.');menu()}]])}
+function pickTheme(){say('Какая тема ближе?');keys(Object.values(THEMES).map(t=>[t.name,()=>{const c=STOPS.filter(s=>THEMES[s.t].name===t.name).length;say(`Отлично! По теме «${t.name}» на маршруте ${c} точ${c===1?'ка':c<5?'ки':'ек'}. Начнём с ближайшей.`);step=-1;next()}]))}
+function next(){
+  step++;
+  if(step>=STOPS.length){say('Маршрут пройден! 🎉\nОцените его от 1 до 5 — это поможет организаторам сделать его лучше.');keys([1,2,3,4,5].map(n=>[String(n),()=>{say(`Спасибо! Оценка ${n} сохранена. Ваши фото уже в альбоме группы.`);step=-1;menu()}]));return}
+  const s=STOPS[step];
+  say(`Точка ${step+1} из ${STOPS.length}: ${s.name}\n📍 ${s.where}\n\n${s.d}`);
+  keys([['Я на месте',()=>{say('🎯 Задание: '+s.task);keys([['Готово, дальше',()=>{done.add(step);save();render();next()}],['Пропустить',next]])}],['В меню',()=>{menu()}]]);
+}
+say('Барев! 👋 Я бот арт-маршрута по Еревану. Проведу по мастерским, галереям и улицам, где рождается армянский дизайн, мода и музыка.');
+menu();
+</script>
+</body>
+</html>
